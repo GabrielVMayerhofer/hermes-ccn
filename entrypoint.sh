@@ -3,7 +3,7 @@ set -e
 
 echo "[Hermes] Configurando OpenCode Free..."
 
-hermes config set model.default mimo-v2.5-free
+hermes config set model.default nemotron-3.5-lightning-free
 hermes config set model.provider opencode-free
 hermes config set model.base_url https://opencode.ai/zen/v1
 hermes config set model.api_mode chat_completions
