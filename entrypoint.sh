@@ -33,6 +33,42 @@ fi
 
 
 # =========================
+# Configuração do projeto
+# =========================
+
+PROJECT_DIR="/opt/data/criacompmain"
+
+if [ ! -d "$PROJECT_DIR/.git" ]; then
+
+    echo "[Git] Clonando fork..."
+
+    git clone \
+        "https://github.com/GabrielVMayerhofer/criacompmain.git" \
+        "$PROJECT_DIR"
+
+    cd "$PROJECT_DIR"
+
+    echo "[Git] Adicionando upstream..."
+
+    git remote add upstream \
+        "https://github.com/filipecalegario/criacompupstream.git"
+
+else
+
+    echo "[Git] Repositório já existe."
+
+    cd "$PROJECT_DIR"
+
+    git fetch origin
+    git fetch upstream
+fi
+
+
+echo "[Git] Remotes:"
+git remote -v
+
+
+# =========================
 # Hermes
 # =========================
 
