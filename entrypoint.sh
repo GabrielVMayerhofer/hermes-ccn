@@ -17,16 +17,14 @@ hermes config get model --json
 # =========================
 
 if [ -n "${GITHUB_TOKEN:-}" ]; then
-    echo "[GitHub] Configurando autenticação..."
-
-    printf '%s\n' "$GITHUB_TOKEN" | gh auth login \
-        --hostname github.com \
-        --with-token
-
-    gh auth setup-git
+    echo "[GitHub] GITHUB_TOKEN encontrado."
 
     echo "[GitHub] Usuário autenticado:"
     gh api user --jq '.login'
+
+    # Permite que o Git use o token para clone/pull/push
+    git config --global credential.helper \
+        '!f() { echo "username=x-access-token"; echo "password=$GITHUB_TOKEN"; }; f'
 else
     echo "[GitHub] GITHUB_TOKEN não configurado"
 fi
@@ -43,7 +41,7 @@ if [ ! -d "$PROJECT_DIR/.git" ]; then
     echo "[Git] Clonando fork..."
 
     git clone \
-        "https://github.com/GabrielVMayerhofer/criacompmain.git" \
+        "https://github.com/GabrielVMayerhofer/criacomp.git" \
         "$PROJECT_DIR"
 
     cd "$PROJECT_DIR"
@@ -51,7 +49,7 @@ if [ ! -d "$PROJECT_DIR/.git" ]; then
     echo "[Git] Adicionando upstream..."
 
     git remote add upstream \
-        "https://github.com/filipecalegario/criacompupstream.git"
+        "https://github.com/filipecalegario/criacomp.git"
 
 else
 
