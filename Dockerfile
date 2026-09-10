@@ -1,5 +1,7 @@
 FROM nousresearch/hermes-agent:latest
 
-COPY config.yaml /root/.hermes/config.yaml
+COPY entrypoint.sh /entrypoint.sh
 
-CMD ["gateway", "run"]
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
